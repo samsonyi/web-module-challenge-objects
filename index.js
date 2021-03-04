@@ -15,9 +15,16 @@ The function should:
   Example createMenuItem('tacos', 8, 'Lunch') should return {name: 'tacos', price: 8, category: 'Lunch'}
 */
 
-function createMenuItem(/*Your code here*/){
-    /*Your code here*/
+function createMenuItem(name, price, category){
+  const itemName = {
+    "name": name,
+    "price": price,
+    "category": category
+  }
+  return itemName;
 }
+console.log(createMenuItem("Beefy Burrito", 12, "Lunch"));
+
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 1b: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
 Invoke your function!
@@ -28,6 +35,18 @@ Test your createMenuItems function by doing the following:
   
   For example: createMenuItem("pizza",5,"lunch") would return this as the object: {name:"Pizza",price:5,category:"lunch"}
 */
+
+function createMenuItem(name, price, category){
+  const itemName = {
+    "name": name,
+    "price": price,
+    "category": category
+  }
+  return itemName;
+}
+console.log(createMenuItem("Beefy Burrito", 12, "Lunch"));
+console.log(createMenuItem("Really Beefy Burrito", 14, "Lunch"));
+console.log(createMenuItem("Beefy Taco", 9, "Lunch"));
 
 
 
@@ -44,13 +63,22 @@ Using the burger object below do the following:
   For example: burger.discount("teacher") would return 13.5 and burger.discount("public") would return 16.2
 */
 
-export const burger = {
+const burger = {
   name: "Burger", 
   price: 18, 
   category: "Lunch", 
-  /*Your code here*/
+  discount: function(str) {
+    if(str === "teacher"){
+      this.price *= 0.75;
+    } else if(str === "student"){
+      this.price *= 0.75;
+    } else if(str === "public") {
+      this.price *= 0.90;
+    }
+    return(this.price) 
+  } 
 }
-
+console.log(burger.discount("public"));
 
 
 ///////////////Reviews (MVP)///////////////////
@@ -70,7 +98,7 @@ Using the reviews array above:
   1. log only Julius' feedback to the console - no function needed 
 */
 
-
+console.log(reviews[5].feedback);
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 4: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -79,6 +107,13 @@ Using the reviews array above do the following: (no function needed)
   2. log the whole array to the console, make sure the new review is inside of it   
 */
 
+const obj = {
+  name: "Sam",
+  rating: 4,
+  feedback: "None"
+}
+reviews.push(obj);
+console.log(reviews);
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
@@ -87,8 +122,8 @@ Reyna's feedback is missing! Use what you know to do the following: (no function
   2. log the reviews array to the console to check your work
 */
 
-
-
+reviews[7].feedback = "this place is chill with really cool people, great for getting work done on weekdays";
+console.log(reviews);
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -101,13 +136,11 @@ Use the getReviewByIndex function below to do the following:
   For example: getReviewByIndex(reviews,0) would return: "Daniela gave the restaurant a 5 star review, and their feedback was: Beautiful atmosphere and wonderful vegan options!"
 */
 
-
-function getReviewByIndex(/*Your code here*/) {
-  /*Your code here*/
+function getReviewByIndex(arr, num) {
+  return `${arr[num].name} gave the restaurant a ${arr[num].rating} star review, and their feedback was: ${arr[num].feedback}`
 }
+console.log(getReviewByIndex(reviews, 0));
 
-
-  
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 7: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
 Write a function to get information about the most recent (last) review called `getLastReview`
@@ -120,11 +153,11 @@ Use the getLastReview function below to do the following:
   For example: getLastReview(reviews) would return: "Reyna gave the restaurant a 3.5 star review, and their feedback was: this place is chill with really cool people, great for getting work done on weekdays".
 */
 
-
-function getLastReview(/*Your code here*/) {
-  /*Your code here*/
-} 
-
+function getLastReview(arr) {
+  let num = arr.length - 1;
+  return `${arr[num].name} gave the restaurant a ${arr[num].rating} star review, and their feedback was: ${arr[num].feedback}`
+}
+console.log(getLastReview(reviews));
 
 
 ///////////////🍔☕️🍽 STRETCH🍔☕️🍽////////////////////
@@ -143,9 +176,17 @@ Use the getReviewsByRating function below to do the following:
   ]
 */
 
- function getReviewByRating(/* code here */) {
-    /* code here */
+const newArr = [];
+function getReviewByRating(arr, num) {
+  for (i=0; i<arr.length; i++) {
+    let obj = arr[i]
+    if(obj.rating >= num && obj.rating < num+1){
+      newArr.push(obj);
+    }
   }
+  return newArr;
+}
+console.log(getReviewByRating(reviews, 4));
 
   
 /* 💪💪💪💪💪💪💪💪💪💪 STRETCH 2: 💪💪💪💪💪💪💪💪💪💪   
@@ -161,9 +202,19 @@ Use the getLongReviews function below to do the following:
   ]
 */
 
-function getLongReviews(/* code here */) {
-    /* code here */
+let count = 0;
+const newArr = [];
+function getLongReviews(arr) {
+  for(i=0; i<arr.length; i++){
+    let feedback = arr[i].feedback;
+    count = feedback.split(" ").length;
+    if(count >= 15){
+      newArr.push(arr[i]);
+    }
   }
+  return newArr;  
+}
+console.log(getLongReviews(reviews));
   
 
 /* 💪💪💪💪💪💪💪💪💪💪 STRETCH 3: 💪💪💪💪💪💪💪💪💪💪 
@@ -183,11 +234,18 @@ Use the carMaker function below to do the following:
   It would return 110 because it was created with 10 as the odometer and we added 100 to it with the drive method 
 */
 
-
-function carMaker(/* code here */) {
-    /* code here */
-    
+function carMaker(miles) {
+  const car1 = {
+    odometer: miles,
+    drive: function(distance){
+      return this.odometer += distance;
+    }
+  }
+  console.log(car1.drive(100));
+  return car1;
 }
+
+console.log(carMaker(10));
 
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
